@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<!--
+    Hibernate Configuration File for Bank Management System
+
+    This file configures database connectivity and Hibernate behavior.
+    It defines the properties required to establish a connection with
+    a PostgreSQL database and control ORM settings.
+
+    Author: Honey
+    Version: 1.0
+-->
+
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- Database driver class for PostgreSQL -->
+        <property name="hibernate.connection.driver_class">
+            com.mysql.cj.jdbc.Driver
+        </property>
+
+        <!-- Database connection URL -->
+        <property name="hibernate.connection.url">
+            jdbc:mysql://localhost:3306/Management
+        </property>
+
+        <!-- Database username -->
+        <property name="hibernate.connection.username">
+            root
+        </property>
+
+        <!-- Database password -->
+        <property name="hibernate.connection.password">
+            Tanishq@2006
+        </property>
+
+        <!-- Automatically updates database schema -->
+        <property name="hibernate.hbm2ddl.auto">
+            update
+        </property>
+
+        <!-- Controls whether SQL statements are shown in console -->
+        <property name="hibernate.show_sql">
+            false
+        </property>
+
+        <!-- SQL dialect for PostgreSQL -->
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.MySQLDialect
+        </property>
+
+    </session-factory>
+    <!-- mysql -h 10.95.230.155 -u friend -p -->
+</hibernate-configuration>
