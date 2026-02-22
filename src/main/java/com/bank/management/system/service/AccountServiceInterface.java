@@ -55,7 +55,7 @@ public interface AccountServiceInterface {
      * @param amount  the amount to deposit (must be positive)
      * @throws IllegalArgumentException if amount is invalid
      */
-    void deposit(Account account, double amount);
+    String deposit(Account account, double amount);
 
     /**
      * Withdraws a specified amount from the given account.
@@ -65,7 +65,7 @@ public interface AccountServiceInterface {
      * @throws IllegalArgumentException if amount is invalid
      * @throws RuntimeException if insufficient balance
      */
-    void withdraw(Account account, double amount);
+    String withdraw(Account account, double amount);
 
     /**
      * Opens a new bank account with the provided details.
@@ -100,7 +100,7 @@ public interface AccountServiceInterface {
      * @throws IllegalArgumentException if validation fails
      * @throws RuntimeException if insufficient balance
      */
-    void transfer(Account sender, long receiverAccNo, double amount);
+    String transfer(Account sender, long receiverAccNo, double amount);
 
     /**
      * Retrieves the latest persisted state of an account.

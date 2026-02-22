@@ -106,33 +106,26 @@ public class AccountService implements AccountServiceInterface {
      * @param amount  Amount to deposit (must be greater than 0)
      */
     @Override
-    public void deposit(Account account, double amount) {
+    public String deposit(Account account, double amount) {
 
         if (amount <= 0) {
             System.out.println("Invalid amount");
-            return;
+            return "Enter valid amount";
         }
 
         try (Session session = HibernateUtility.getSessionFactory().openSession()) {
-
             Transaction transaction = session.beginTransaction();
-
             Account managedAccount =
                     session.find(Account.class, account.getAccountNumber());
-
             History history = new History();
-
             managedAccount.setBalance(managedAccount.getBalance() + amount);
-
             history.setType("Deposit");
             history.setAmount(amount);
             history.setDateTime(LocalDateTime.now());
-
             managedAccount.addHistory(history);
-
             transaction.commit();
-
             System.out.println("Deposit successful 👍");
+            return "Deposit successful 👍";
         }
     }
 
@@ -144,39 +137,29 @@ public class AccountService implements AccountServiceInterface {
      *                and less than available balance)
      */
     @Override
-    public void withdraw(Account account, double amount) {
-
+    public String withdraw(Account account, double amount) {
         if (amount <= 0) {
             System.out.println("Invalid amount");
-            return;
+            return "Enter valid amount";
         }
-
         try (Session session = HibernateUtility.getSessionFactory().openSession()) {
-
             Transaction transaction = session.beginTransaction();
-
             Account managedAccount =
                     session.find(Account.class, account.getAccountNumber());
-
             if (managedAccount.getBalance() < amount) {
                 System.out.println("Insufficient balance ❌");
-                return;
+                return "Insufficient balance ❌";
             }
-
             History history = new History();
-
             managedAccount.setBalance(managedAccount.getBalance() - amount);
-
             history.setType("Withdraw");
             history.setAmount(amount);
             history.setDateTime(LocalDateTime.now());
-
             managedAccount.addHistory(history);
-
             transaction.commit();
-
             System.out.println("Withdrawal successful 👍");
             System.out.println("New Balance: " + managedAccount.getBalance());
+            return "Withdrawal successful 👍";
         }
     }
 
@@ -206,11 +189,11 @@ public class AccountService implements AccountServiceInterface {
      *                      less than sender balance)
      */
     @Override
-    public void transfer(Account sender, long receiverAccNo, double amount) {
+    public String transfer(Account sender, long receiverAccNo, double amount) {
 
         if (amount <= 0) {
             System.out.println("Invalid amount");
-            return;
+            return "Invalid amount";
         }
 
         try (Session session = HibernateUtility.getSessionFactory().openSession()) {
@@ -224,12 +207,12 @@ public class AccountService implements AccountServiceInterface {
 
             if (receiver == null) {
                 System.out.println("Receiver account not found ❌");
-                return;
+                return "Receiver account not found ❌";
             }
 
             if (managedSender.getBalance() < amount) {
                 System.out.println("Insufficient balance ❌");
-                return;
+                return "Insufficient balance ❌";
             }
 
             History sendHistory = new History();
@@ -252,6 +235,7 @@ public class AccountService implements AccountServiceInterface {
             transaction.commit();
 
             System.out.println("Transfer successful 👍");
+            return "Transfer successful 👍";
         }
     }
 

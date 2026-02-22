@@ -37,10 +37,6 @@
             Tanishq@2006
         </property>
 
-        <!-- Automatically updates database schema -->
-        <property name="hibernate.hbm2ddl.auto">
-            update
-        </property>
 
         <!-- Controls whether SQL statements are shown in console -->
         <property name="hibernate.show_sql">

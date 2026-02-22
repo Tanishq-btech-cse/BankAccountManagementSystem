@@ -329,30 +329,38 @@ public class UiUtility {
 
     public static void depositUI() {
         if (!verifyMPin()) return;
-
         String input = (String) JOptionPane.showInputDialog(
                 null,
                 "Enter Deposit Amount:",
                 "Deposit Amount",
                 JOptionPane.PLAIN_MESSAGE,
-                smallIcon,   // ⭐ YOUR BANK ICON HERE
+                smallIcon,
                 null,
-                "500"
+                "0.0"
         );
-
         if (input != null) {
-            service.deposit(loggedInAccount, Double.parseDouble(input));
-
+            String msg = service.deposit(loggedInAccount, Double.parseDouble(input));
             refreshAccount(); // update from DB
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Deposit Successful 👍\n" +
-                            "Account Balance: ₹" + loggedInAccount.getBalance(),
-                    "Transaction Status",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    smallIcon     // ⭐ THIS is your small icon
-            );
+            if(msg.equals("Deposit successful 👍")) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Deposit Successful 👍\n" +
+                                "Account Balance: ₹" + loggedInAccount.getBalance(),
+                        "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon
+                );
+            }
+            else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Invalid attempt of deposit ❌\n" +
+                                " ",
+                        "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon
+                );
+            }
         }
     }
     public static void withdrawUI() {
@@ -362,18 +370,32 @@ public class UiUtility {
                 "Enter Withdraw Amount:",
                 "Withdraw Amount",
                 JOptionPane.PLAIN_MESSAGE,
-                smallIcon,   // ⭐ YOUR BANK ICON HERE
+                smallIcon,
                 null,
-                "500"
+                "0.0"
         );
         if (input != null) {
-            service.withdraw(loggedInAccount, Double.parseDouble(input));
+            String msg = service.withdraw(loggedInAccount, Double.parseDouble(input));
             refreshAccount();
-            JOptionPane.showMessageDialog(null,
-                    "Withdraw Successful 👍\n" +
-                            "Account Balance: " + loggedInAccount.getBalance(),"Transaction Status",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    smallIcon );
+            if(msg.equals("Withdrawal successful 👍")) {
+                JOptionPane.showMessageDialog(null,
+                        "Withdraw Successful 👍\n" +
+                                "Account Balance: " + loggedInAccount.getBalance(), "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon);
+            } else if (msg.equals("Enter valid amount")) {
+                JOptionPane.showMessageDialog(null,
+                        "Enter valid amount ⚠️\n" +
+                                " ", "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Insufficient balance ❌\n" +
+                                " ", "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon);
+            }
         }
     }
 
@@ -390,27 +412,48 @@ public class UiUtility {
     public static void transferUI() {
         if (!verifyMPin()) return;
         String acc = (String) JOptionPane.showInputDialog(null,"Receiver Account:",
-                "",
+                "Transfer Amount",
                 JOptionPane.PLAIN_MESSAGE,
-                smallIcon,   // ⭐ YOUR BANK ICON HERE
+                smallIcon,
                 null,
-                "500");
+                "82705XXXXXXXX");
         String amt = (String) JOptionPane.showInputDialog(null,"Amount:","Transection Status",
                 JOptionPane.PLAIN_MESSAGE,
                 smallIcon,
-                null,"500");
+                null,"0.0");
         if (acc != null && amt != null) {
-            service.transfer(
+            String msg = service.transfer(
                     loggedInAccount,
                     Long.parseLong(acc),
                     Double.parseDouble(amt)
             );
             refreshAccount();
-            JOptionPane.showMessageDialog(null,
-                    "Transfer Successful 👍\n" +
-                            "Account Balance: " + loggedInAccount.getBalance(),"Transaction Status",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    smallIcon);
+            if (msg.equals("Transfer successful 👍")) {
+                JOptionPane.showMessageDialog(null,
+                        "Transfer Successful 👍\n" +
+                                "Account Balance: " + loggedInAccount.getBalance(), "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon);
+            } else if (msg.equals("Receiver account not found ❌")) {
+                JOptionPane.showMessageDialog(null,
+                        "Receiver account not found ❌\n" +
+                                "Please enter valid Account Number ⚠️", "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon);
+            } else if (msg.equals("Insufficient balance ❌")) {
+                JOptionPane.showMessageDialog(null,
+                        "Insufficient balance ❌\n" +
+                                " ", "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon);
+            }
+            else {
+                JOptionPane.showMessageDialog(null,
+                        "Invalid amount ❌\n" +
+                                " ", "Transaction Status",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        smallIcon);
+            }
         }
     }
 

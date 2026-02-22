@@ -2,8 +2,6 @@ package com.bank.management.system.entity;
 
 import com.bank.management.system.annotation.TransectionId;
 import jakarta.persistence.*;
-import org.hibernate.boot.model.relational.Database;
-
 import java.time.LocalDateTime;
 
 /**
