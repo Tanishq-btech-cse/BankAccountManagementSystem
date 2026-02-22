@@ -7,6 +7,7 @@ import com.bank.management.system.service.AccountService;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -50,10 +51,10 @@ import java.util.List;
  */
 public class UiUtility {
 
-    private static AccountService service = new AccountService();
+    private static final AccountService service = new AccountService();
     private static Account loggedInAccount;
     static ImageIcon bankIcon = new ImageIcon(
-            UiUtility.class.getResource("/Tanishq_Bank.png")
+            Objects.requireNonNull(UiUtility.class.getResource("/Tanisha_Bank.png"))
     );
     static Image scaledImage = bankIcon.getImage()
             .getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -278,13 +279,13 @@ public class UiUtility {
             int entered = Integer.parseInt(new String(pf.getPassword()));
 
             if (entered == loggedInAccount.getMPin()) {
-                return true;
+                return false;
             } else {
                 JOptionPane.showMessageDialog(null, "Wrong MPIN",
                         "",JOptionPane.PLAIN_MESSAGE,smallIcon);
             }
         }
-        return false;
+        return true;
     }
 
     public static void showTransectionHistoryUI() {
@@ -328,7 +329,7 @@ public class UiUtility {
     }
 
     public static void depositUI() {
-        if (!verifyMPin()) return;
+        if (verifyMPin()) return;
         String input = (String) JOptionPane.showInputDialog(
                 null,
                 "Enter Deposit Amount:",
@@ -364,7 +365,7 @@ public class UiUtility {
         }
     }
     public static void withdrawUI() {
-        if (!verifyMPin()) return;
+        if (verifyMPin()) return;
         String input = (String) JOptionPane.showInputDialog(
                 null,
                 "Enter Withdraw Amount:",
@@ -410,7 +411,7 @@ public class UiUtility {
     }
 
     public static void transferUI() {
-        if (!verifyMPin()) return;
+        if (verifyMPin()) return;
         String acc = (String) JOptionPane.showInputDialog(null,"Receiver Account:",
                 "Transfer Amount",
                 JOptionPane.PLAIN_MESSAGE,
