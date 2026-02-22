@@ -7,7 +7,7 @@ import com.bank.management.system.service.AccountService;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.Objects;
+
 
 
 /**
@@ -51,10 +51,10 @@ import java.util.Objects;
  */
 public class UiUtility {
 
-    private static final AccountService service = new AccountService();
+    private static AccountService service = new AccountService();
     private static Account loggedInAccount;
     static ImageIcon bankIcon = new ImageIcon(
-            Objects.requireNonNull(UiUtility.class.getResource("/Tanisha_Bank.png"))
+            UiUtility.class.getResource("/Tanishq_Bank.png")
     );
     static Image scaledImage = bankIcon.getImage()
             .getScaledInstance(30, 30, Image.SCALE_SMOOTH);
